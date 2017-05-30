@@ -67,7 +67,7 @@ public class CS_DialogBox : CS_DialogBase
         nbDialog = EditorGUILayout.IntField("Nb dialog: ", nbDialog);
         EditorGUILayout.LabelField("Dialog: ");
         int i = 0;
-        Debug.Log(_lastNb + " " + nbDialog + " " + dialogs.Count);
+
         if (_lastNb != nbDialog)
         {
             List<String> s = new List<string>();

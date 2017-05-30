@@ -26,11 +26,10 @@ public class E_DialogManager : MonoBehaviour
     }
 	
 
-	public IEnumerator OnEnd ()
+	public void OnEnd ()
     {
         _dialogs.Clear();
         DialogBox.SetActive(false);
-        yield return new WaitForSeconds(0.15f);
 	}
 
     public void SetIndex(int i)

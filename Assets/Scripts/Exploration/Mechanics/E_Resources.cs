@@ -40,6 +40,6 @@ public class E_Resources : MonoBehaviour
 
     private void OnMouseDown()
     {
-        player.GetComponent<E_Movement>().MoveResource((int)resourcesType, transform.position);
+       // player.GetComponent<E_Movement>().MoveResource((int)resourcesType, transform.position);
     }
 }
