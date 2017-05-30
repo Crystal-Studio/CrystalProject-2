@@ -23,11 +23,19 @@ public class E_InteractWithPNJWithZoom : MonoBehaviour
     void Start()
     {
         dialogBase = new CS_DialogBase();
-        dialogBox = new CS_DialogBox();
-
+        Debug.Log("Dialog Base : " + dialogBase + "DialogGraph : " + dialogGraph + " ->  " + dialogGraph.Dialogs[idDialog]);
         dialogBase = dialogGraph.Dialogs[idDialog];
-        dialogBox = (CS_DialogBox)dialogBase;
+        Debug.Log("Dialsssssog Base : " + dialogBase + "DialossssgGraph : " + dialogGraph);
+
+        dialogBox = new CS_DialogBox();
+        dialogBox = (CS_DialogBox)dialogGraph.Dialogs[idDialog];
+
         dialogs.AddRange(dialogBox.dialogs);
+    }
+
+    private void Update()
+    {
+        Debug.Log("Error : " + dialogBox + " - " + dialogBase + " " + dialogGraph.Dialogs[idDialog]);
     }
 
     private void OnMouseEnter()
