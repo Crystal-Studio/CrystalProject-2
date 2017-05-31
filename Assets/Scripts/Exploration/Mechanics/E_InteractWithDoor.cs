@@ -48,6 +48,8 @@ public class E_InteractWithDoor : MonoBehaviour
 
     public void OnInteractStart()
     {
+        if (!_open)
+            return;
         call.Add(ShowContent);
         StartCoroutine(DoActions());
     }

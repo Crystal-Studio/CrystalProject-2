@@ -75,6 +75,7 @@ public class E_pMovement : MonoBehaviour
 
             s_pManager.playerState = e_playerState.MOVEMENT;
             NavMesh.CalculatePath(gameObject.transform.position, _navHit.position, NavMesh.AllAreas, _navPath);
+            s_pManager.GetAnimator().SetFloat("moveSpeed", 0.1f);
         }
     }
 
