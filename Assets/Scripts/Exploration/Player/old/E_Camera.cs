@@ -8,7 +8,8 @@ public enum e_actionCamera
     DEFAULT,
     ZOOMIN,
     ZOOMOUT,
-    MOVETO
+    MOVETO,
+    EARTHQUAKE
 }
 
 public class E_Camera : MonoBehaviour
@@ -17,6 +18,14 @@ public class E_Camera : MonoBehaviour
 	public GameObject player;
     public Vector3 offsetDefault;
     public Vector3 offsetEoomIn;
+
+    /* SHAKE */
+    Vector3 _originalPos;
+    // How long the object should shake for.
+    public float shakeDuration;
+    public float shakeAmount;
+    public float decreaseFactor;
+    /* *** ENDSHAKE *** */
 
     private e_actionCamera actionCamera;
 
@@ -33,6 +42,7 @@ public class E_Camera : MonoBehaviour
 
 	void Update ()
     {
+        Debug.Log(actionCamera);
         switch (actionCamera)
         {
             case e_actionCamera.DEFAULT:
@@ -72,6 +82,27 @@ public class E_Camera : MonoBehaviour
                 if (transform.position == targetMoveTo)
                     _next = true;
                 break;
+            case e_actionCamera.EARTHQUAKE:
+                if (shakeDuration > 0)
+                {
+                    transform.position = new Vector3(player.transform.position.x + offsetDefault.x,
+                                         player.transform.position.y + offsetDefault.y,
+                                         player.transform.position.z + offsetDefault.z) + Random.insideUnitSphere * shakeAmount;
+                    transform.position = new Vector3(transform.position.x, player.transform.position.y + offsetDefault.y, transform.position.z);
+
+                    shakeDuration -= Time.deltaTime * decreaseFactor;
+                }
+                else
+                {
+                    shakeDuration = 0f;
+                    transform.position = new Vector3(player.transform.position.x + offsetDefault.x,
+                                         player.transform.position.y + offsetDefault.y,
+                                         player.transform.position.z + offsetDefault.z);
+                    actionCamera = e_actionCamera.DEFAULT;
+                    _next = true;
+                }
+
+                break;
         }
 	}
 
@@ -97,7 +128,6 @@ public class E_Camera : MonoBehaviour
 
     public void SetTarget(Vector3 v)
     {
-        Debug.Log("TARGET : " + v);
         _target = v;
     }
 
@@ -110,5 +140,25 @@ public class E_Camera : MonoBehaviour
         while (_next == false)
             yield return null;
         yield return new WaitForSeconds(0.15f);
+    }
+
+    public IEnumerator EarthQUake()
+    {
+        shakeDuration = 0.5f;
+        shakeAmount = 0.2f;
+        decreaseFactor = 1;
+
+        player.GetComponent<E_pManager>().SetMove(false);
+        _originalPos = transform.position;
+        _next = false;
+        actionCamera = e_actionCamera.EARTHQUAKE;
+      
+        while (_next)
+            yield return null;
+ 
+        yield return new WaitForSeconds(0.75f);
+
+        player.GetComponent<E_pManager>().SetMove(true);
+
     }
 }

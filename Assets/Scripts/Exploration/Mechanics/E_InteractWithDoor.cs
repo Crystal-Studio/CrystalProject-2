@@ -9,40 +9,41 @@ public class E_InteractWithDoor : MonoBehaviour
     public Transform target;
     public GameObject door;
 
-    public CS_DialogGraph dialogGraph;
-    public int idDialog;
-
     [SerializeField] private float _speed;
     [SerializeField] private bool _open;
 
     private bool _changeStateDoor;
-
-    private CS_DialogBase dialogBase;
-    private CS_DialogBox dialogBox;
 
     private List<String> dialogs = new List<String>();
     private List<Func<IEnumerator>> call = new List<Func<IEnumerator>>();
 
     void Start ()
     {
-        dialogBase = new CS_DialogBase();
-        dialogBox = new CS_DialogBox();
-
-        dialogBase = dialogGraph.Dialogs[idDialog];
-        dialogBox = (CS_DialogBox)dialogBase;
-        dialogs.AddRange(dialogBox.dialogs);
+        dialogs = new List<String>(GetComponent<GetDialogFromFile>().GetDialog(PlayerPrefs.GetInt("Language")));
 
         _changeStateDoor = false;
     }
 
 	void Update ()
     {
-		if (_changeStateDoor)
+        Debug.Log(door.transform.eulerAngles + " " + _changeStateDoor);
+        if (_changeStateDoor)
         {
-            door.transform.localEulerAngles = Vector3.MoveTowards(door.transform.localEulerAngles, Vector3.zero, _speed * Time.deltaTime);
+            if (_open)
+            {
+                door.transform.localEulerAngles = Vector3.MoveTowards(door.transform.localEulerAngles, Vector3.zero, _speed * Time.deltaTime);
 
-            if (door.transform.localEulerAngles == Vector3.zero)
-                _changeStateDoor = false;
+                if (door.transform.localEulerAngles == Vector3.zero)
+                    _changeStateDoor = false;
+            }
+            else
+            {
+                door.transform.localEulerAngles = Vector3.MoveTowards(door.transform.localEulerAngles, new Vector3(0, 90, 0), _speed * Time.deltaTime);
+
+                if (door.transform.localEulerAngles == new Vector3(0, 90, 0))
+                    _changeStateDoor = false;
+            }
+            
         }
 	}
 
@@ -54,6 +55,7 @@ public class E_InteractWithDoor : MonoBehaviour
 
     public void OnInteractSwitchStart()
     {
+        _open = true;
         GM_Manager.instance.player.GetComponent<E_pManager>().SetMove(false);
         Camera.main.GetComponent<E_Camera>().SetTarget(door.transform.position);
         call.Add(Camera.main.GetComponent<E_Camera>().CameraMoveTo);
@@ -61,14 +63,28 @@ public class E_InteractWithDoor : MonoBehaviour
         call.Add(Camera.main.GetComponent<E_Camera>().CameraZoomOUT);
         call.Add(HeroMove);
         StartCoroutine(DoActions());
-        _open = true;
+        
     }
 
     public void OnInteractSwitchEnd()
     {
-
+        _open = false;
+        GM_Manager.instance.player.GetComponent<E_pManager>().SetMove(false);
+        Camera.main.GetComponent<E_Camera>().SetTarget(door.transform.position);
+        call.Add(Camera.main.GetComponent<E_Camera>().CameraMoveTo);
+        call.Add(CloseDoor);
+        call.Add(Camera.main.GetComponent<E_Camera>().CameraZoomOUT);
+        call.Add(HeroMove);
+        StartCoroutine(DoActions());
     }
 
+    public void OnInteractWithoutCamera()
+    {
+
+        StartCoroutine(Camera.main.GetComponent<E_Camera>().EarthQUake());
+        door.transform.localEulerAngles = new Vector3(0,0,0);
+       
+    }
 
     public void OnInteractEnd()
     {
@@ -89,6 +105,14 @@ public class E_InteractWithDoor : MonoBehaviour
     {
         _changeStateDoor = true;
         while(_changeStateDoor)
+            yield return null;
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    IEnumerator CloseDoor()
+    {
+        _changeStateDoor = true;
+        while (_changeStateDoor)
             yield return null;
         yield return new WaitForSeconds(0.1f);
     }

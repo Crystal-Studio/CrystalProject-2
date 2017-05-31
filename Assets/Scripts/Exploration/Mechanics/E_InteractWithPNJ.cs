@@ -8,25 +8,14 @@ public class E_InteractWithPNJ : MonoBehaviour
     public Texture2D cursor;
     public Transform target;
 
-    public CS_DialogGraph dialogGraph;
-    public int idDialog;
-
     private List<String> dialogs = new List<String>();
-
-    private CS_DialogBase dialogBase;
-    private CS_DialogBox dialogBox;
 
     private List<Func<IEnumerator>> call = new List<Func<IEnumerator>>();
 
     // Use this for initialization
     void Start()
     {
-        dialogBase = new CS_DialogBase();
-        dialogBox = new CS_DialogBox();
-
-        dialogBase = dialogGraph.Dialogs[idDialog];
-        dialogBox = (CS_DialogBox)dialogBase;
-        dialogs.AddRange(dialogBox.dialogs);
+        dialogs = new List<String>(GetComponent<GetDialogFromFile>().GetDialog(PlayerPrefs.GetInt("Language")));
     }
 
     private void OnMouseEnter()

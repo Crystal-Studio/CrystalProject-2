@@ -1,0 +1,33 @@
+﻿{
+	"dialog": [{
+			"key": "ExplainColor",
+			"fr": ["Le bleu représente les <color=#3498db>lieux</color>, le vert les <color=#2ecc71>objets</color>, le rouge un<color=#e74c3c> personnage</color>, le jaune une <color=yellow>mécanique</color> et le orange une <color=orange>quête</color>."],
+			"en": "dscrptn"
+		},
+		{
+			"key": "DoorNeedSwitch",
+			"fr": ["Sur ta droite se trouve une porte. Elle est bloqué. Pour l'ouvrir il faut que tu trouves un <color=yellow>interrupteur</color>. Celui-ci, une fois activé, pourrait l'ouvrir !"],
+			"en": "dscrzfptn"
+		},
+		{
+			"key": "ExplainSwitch",
+			"fr": ["Il existe 3 types d'<color=yellow>interrupteurs</color>.", "Le premier est basique : un simple appuis suffit de l'activer", "Ensuite il y a l'interrupteur pression : Il reste actif seulement si une pression est sur celui-ci", "Le dernier est un interrupteur avec un timer. Il reste activé pendant un court lapse de temps"],
+			"en": "dscrzfptn"
+		},
+		{
+			"key": "MagePower",
+			"fr": ["Le <color=#e74c3c>mage</color> à la capacité de soulever des choses et les déplacer grâce à la télékinésie. Pour cela il suffit d'appuyer sur A et de séléctionner la caisse. Ensuite dépose là ou tu veux !"],
+			"en": "dscrzfptn"
+		,
+		{
+			"key": "ExplainSwitchHerosArcherPower",
+			"fr": ["N'oublie pas que tu as 3 <color=#e74c3c>héros</color> à ta disposition.", "Pour changer de héros il suffit d'appuyer sur & é ou \"", "Appuis sur é pour jouer avec l'<color=#e74c3c>archer</color>", "L'<color=#e74c3c>archer</color> peut rirer une flèche. Si elle s'enfonce alors tu seras attiré vers elle, comme un grappin !"],
+			"en": "dscrzfptn"
+		},
+		{
+			"key": "ColorSwitch",
+			"fr": ["Sur la gauche se trouve un <color=yellow>interrupteur</color> magique. Il a une couleur. Une fois activé il ouvrira la porte de cette couleur dans le donjon ou tu te trouves."],
+			"en": "dscrzfptn"
+		}
+	]
+}

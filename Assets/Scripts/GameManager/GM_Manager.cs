@@ -26,8 +26,6 @@ public class GM_Manager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
 
-        Debug.Log("'sdfsd");
-
         player = GameObject.Find("Player");
         
     }

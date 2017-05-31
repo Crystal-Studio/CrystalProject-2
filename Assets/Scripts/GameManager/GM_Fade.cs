@@ -42,7 +42,6 @@ public class GM_Fade : MonoBehaviour
 
     public IEnumerator FadeOUT()
     {
-        Debug.Log("lfreswlwfvcwjdsxjliclwjksd");
         _fade = true;
         c = Color.black;
         fadeImage.color = c;

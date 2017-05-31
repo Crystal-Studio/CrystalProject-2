@@ -8,34 +8,19 @@ public class E_InteractWithPNJWithZoom : MonoBehaviour
     public Texture2D cursor;
     public Transform target;
 
-    public CS_DialogGraph dialogGraph;
-    public int idDialog;
-
     [HideInInspector]
     public List<String> dialogs = new List<String>();
 
-    private CS_DialogBase dialogBase;
-    private CS_DialogBox dialogBox;
-
     private List<Func<IEnumerator>> call = new List<Func<IEnumerator>>();
 
-    // Use this for initialization
     void Start()
     {
-        dialogBase = new CS_DialogBase();
-        Debug.Log("Dialog Base : " + dialogBase + "DialogGraph : " + dialogGraph + " ->  " + dialogGraph.Dialogs[idDialog]);
-        dialogBase = dialogGraph.Dialogs[idDialog];
-        Debug.Log("Dialsssssog Base : " + dialogBase + "DialossssgGraph : " + dialogGraph);
-
-        dialogBox = new CS_DialogBox();
-        dialogBox = (CS_DialogBox)dialogGraph.Dialogs[idDialog];
-
-        dialogs.AddRange(dialogBox.dialogs);
+        dialogs = new List<String>(GetComponent<GetDialogFromFile>().GetDialog(PlayerPrefs.GetInt("Language")));
     }
 
     private void Update()
     {
-        Debug.Log("Error : " + dialogBox + " - " + dialogBase + " " + dialogGraph.Dialogs[idDialog]);
+      //  Debug.Log("Error : " + dialogBox + " - " + dialogBase + " " + dialogGraph.Dialogs[idDialog]);
     }
 
     private void OnMouseEnter()

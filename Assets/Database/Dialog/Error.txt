@@ -1,0 +1,13 @@
+﻿{
+	"dialog": [{
+			"key": "DoorCantBeOpen",
+			"fr": ["La porte semble être bloqué."],
+			"en": "dscrptn"
+		},
+		{
+			"key": "Text2",
+			"fr": ["plzfecsc"],
+			"en": "dscrzfptn"
+		}
+	]
+}
