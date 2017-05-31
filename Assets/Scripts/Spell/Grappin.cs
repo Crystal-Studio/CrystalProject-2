@@ -47,7 +47,7 @@ public class Grappin : MonoBehaviour
             RaycastHit rhit;
             if (Physics.Raycast(_arrow.transform.position, _arrow.transform.forward, out rhit, 0.5f, layerCollider))
             {
-                _endPos = rhit.point * 0.95f;
+                _endPos = Tools.GetPointDistanceFromObject(-1 * (rhit.transform.localScale.x / 2), rhit.point, player.transform.position);
                 _playerMovement = true;
                 _arrowMovement = false;
                 player.GetComponent<NavMeshAgent>().enabled = false;
@@ -57,7 +57,7 @@ public class Grappin : MonoBehaviour
 
         if (_playerMovement)
         {
-            player.transform.position = Vector3.MoveTowards(player.transform.position, _endPos, speed * 2 * Time.deltaTime);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, _endPos, speed * 1.5f * Time.deltaTime);
 
             if (player.transform.position == _endPos)
                 _playerMovement = false;
@@ -66,7 +66,6 @@ public class Grappin : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _arrowMovement == false && _playerMovement == false)
         {
             StartCoroutine(OnArrowMove());
-
         }
         
         if (Input.GetMouseButtonDown(1))
@@ -83,8 +82,6 @@ public class Grappin : MonoBehaviour
     {
        _isActive = true;
 
-        
-
         player.transform.GetChild(4).localScale = new Vector3(size.x / 10, 1, size.y / 10);
         player.transform.GetChild(4).gameObject.SetActive(true);
     }
@@ -93,6 +90,7 @@ public class Grappin : MonoBehaviour
     {
         _isActive = false;
 
+        player.GetComponent<E_pManager>().SetTimerSpell(Time.time);
         player.GetComponent<E_pManager>().SetRotate(true);
         player.GetComponent<E_pManager>().SetCasting(false);
         yield return new WaitForSeconds(0.15f);

@@ -46,7 +46,7 @@ public class E_InteractChangeScene : MonoBehaviour
 
     IEnumerator LoadScene()
     {
-        GM_Manager.instance.player.transform.position = Vector3.zero;
+        GM_Manager.instance.player.transform.localPosition = Vector3.zero;
         Camera.main.transform.position = Vector3.zero;
         GM_Manager.instance.gameObject.transform.position = playerPosition;
         async.allowSceneActivation = true;

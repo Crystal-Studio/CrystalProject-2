@@ -26,7 +26,6 @@ public class E_InteractWithDoor : MonoBehaviour
 
 	void Update ()
     {
-        Debug.Log(door.transform.eulerAngles + " " + _changeStateDoor);
         if (_changeStateDoor)
         {
             if (_open)

@@ -42,7 +42,6 @@ public class E_Camera : MonoBehaviour
 
 	void Update ()
     {
-        Debug.Log(actionCamera);
         switch (actionCamera)
         {
             case e_actionCamera.DEFAULT:
@@ -124,6 +123,8 @@ public class E_Camera : MonoBehaviour
         while (_next == false)
             yield return null;
         yield return new WaitForSeconds(0.15f);
+
+        actionCamera = e_actionCamera.DEFAULT;
     }
 
     public void SetTarget(Vector3 v)
@@ -161,4 +162,6 @@ public class E_Camera : MonoBehaviour
         player.GetComponent<E_pManager>().SetMove(true);
 
     }
+
+    public e_actionCamera GetCameraState() { return actionCamera; }
 }

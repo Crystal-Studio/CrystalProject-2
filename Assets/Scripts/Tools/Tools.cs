@@ -20,6 +20,18 @@ namespace CrystalStudioTools
 
             return direction;
         }
+
+
+        public static Vector3 GetPointDistanceFromObject(float distanceFromSurface, Vector3 pos1, Vector3 pos2)
+        {
+            Vector3 directionOfTravel = pos1 - pos2;
+
+            Vector3 finalDirection = directionOfTravel + directionOfTravel.normalized * distanceFromSurface;
+
+            Vector3 targetPosition = pos2 + finalDirection;
+
+            return targetPosition;
+        }
     }
 }
 

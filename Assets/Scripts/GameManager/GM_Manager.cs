@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GM_Manager : MonoBehaviour
@@ -17,6 +19,13 @@ public class GM_Manager : MonoBehaviour
 
     [Header("Spells")]
     public GameObject spell;
+    public GameObject spellBar;
+
+    private Vector2 _size;
+
+    private bool _spellBar;
+    private float _timer;
+    private float _timerSpell;
 
     private void Awake()
     {
@@ -27,7 +36,23 @@ public class GM_Manager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         player = GameObject.Find("Player");
-        
+        _size = spellBar.transform.GetChild(1).transform.GetComponent<RectTransform>().sizeDelta;
+    }
+
+    private void Update()
+    {
+        if (_spellBar)
+        {
+            spellBar.transform.GetChild(1).transform.GetComponent<RectTransform>().sizeDelta = new Vector2(
+                (Time.time - _timerSpell) * _size.x / _timer,
+                spellBar.transform.GetChild(1).transform.GetComponent<RectTransform>().sizeDelta.y);
+
+            if (spellBar.transform.GetChild(1).transform.GetComponent<RectTransform>().sizeDelta.x >= _size.x)
+            {
+                spellBar.SetActive(false);
+                _spellBar = false;
+            }
+        }
     }
 
     void OnEnable()
@@ -46,5 +71,15 @@ public class GM_Manager : MonoBehaviour
     {
         StartCoroutine(s_fade.FadeOUT());
         player.GetComponent<E_pManager>().SetMove(true);
+        GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+
+    public void DisplaySpellBar(float f, float t)
+    {
+        _spellBar = true;
+        spellBar.transform.GetChild(1).transform.GetComponent<RectTransform>().sizeDelta = _size;
+        spellBar.SetActive(true);
+        _timer = f;
+        _timerSpell = t;
     }
 }

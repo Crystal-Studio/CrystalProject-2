@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public enum e_switchType
@@ -29,6 +30,7 @@ public class E_InteractWithSwitch : MonoBehaviour
             transform.GetChild(0).transform.localPosition = new Vector3(0, -0.1f, 0);
         }
         _isActive += 1;
+        GM_Manager.instance.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     private void OnDisableSwitch()
@@ -39,6 +41,7 @@ public class E_InteractWithSwitch : MonoBehaviour
             transform.GetChild(0).transform.localPosition = Vector3.zero;
             onDisable.Invoke();
         }
+        GM_Manager.instance.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     private void OnTriggerEnter(Collider other)

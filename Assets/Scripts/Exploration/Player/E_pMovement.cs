@@ -34,6 +34,9 @@ public class E_pMovement : MonoBehaviour
             _hasTarget = false;
             s_pManager.InteractReachedPosition();
         }
+
+        if (transform.position == _navMesh.destination)
+            StopMovement();
     }
 
     public void Move()
@@ -62,7 +65,6 @@ public class E_pMovement : MonoBehaviour
 
     public void MoveToTarget(Vector3 target)
     {
-        Debug.Log(target);
         _hasTarget = true;
         if (NavMesh.SamplePosition(target, out _navHit, 700, NavMesh.AllAreas))
         {
@@ -82,6 +84,7 @@ public class E_pMovement : MonoBehaviour
         _navMesh.destination = transform.position;
         _navMesh.isStopped = true;
         s_pManager.playerState = e_playerState.IDLE;
+        s_pManager.SetRotate(true);
     }
 
 

@@ -119,10 +119,12 @@ public class Telekinesie : MonoBehaviour
 
     IEnumerator OnEndSpell()
     {
+        player.GetComponent<E_pManager>().SetTimerSpell(Time.time);
         player.transform.GetChild(3).gameObject.SetActive(false);
         player.GetComponent<E_pManager>().SetCasting(false);
         yield return new WaitForSeconds(0.15f);
-        player.GetComponent<E_pManager>().SetMove(true);
+        if (Camera.main.GetComponent<E_Camera>().GetCameraState() == e_actionCamera.DEFAULT)
+             player.GetComponent<E_pManager>().SetMove(true);
     }
 
 }

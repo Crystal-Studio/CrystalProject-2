@@ -43,11 +43,14 @@ public class E_pManager : MonoBehaviour
     public float maxDistance;
 
     private GameObject interactObj;
-
     /* *** EndInteract *** */
 
     /* *** Spell *** */
+    [Header("Spell")]
     private bool _isCasting;
+
+    public float timerSpell;
+    private float _timeSpell;
 
     enum e_spell
     {
@@ -87,11 +90,12 @@ public class E_pManager : MonoBehaviour
                 if (_hasTarget)
                     _hasTarget = false;
                 _timeButtonClickMovement = Time.time;
+                _canRotate = false;
             }
 
             if (Input.GetMouseButton(0) && _followCursor && _canMove)
             {
-                s_pMovement.Move();
+                s_pMovement.Move(); 
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -101,6 +105,9 @@ public class E_pManager : MonoBehaviour
                 if (_timeButtonClickMovement > timeButtonClickMovement)
                     s_pMovement.StopMovement();
             }
+
+            if (Camera.main.GetComponent<E_Camera>().GetCameraState() != e_actionCamera.DEFAULT)
+                s_pMovement.StopMovement();
             #endregion
 
             #region Switch Hero
@@ -116,6 +123,7 @@ public class E_pManager : MonoBehaviour
         #region Spell
         if (Input.GetButtonDown("Spell_A") && !_isCasting)
             CastSpell();
+           
         if (Input.GetMouseButtonDown(1))
             DecastSpell();
 
@@ -137,6 +145,9 @@ public class E_pManager : MonoBehaviour
 
     void CastSpell()
     {
+        if (Time.time < _timeSpell + timerSpell)
+            return;
+       
         _isCasting = true;
         _canMove = false;
         s_pMovement.StopMovement();
@@ -192,6 +203,12 @@ public class E_pManager : MonoBehaviour
     public bool GetCasting() { return _isCasting; }
 
     public void SetRotate(bool b) { _canRotate = b; }
+
+    public void SetTimerSpell(float f)
+    {
+        _timeSpell = f;
+        GM_Manager.instance.DisplaySpellBar(timerSpell, f);
+    }
     #endregion
 
 }

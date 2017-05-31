@@ -18,7 +18,7 @@
 			"key": "MagePower",
 			"fr": ["Le <color=#e74c3c>mage</color> à la capacité de soulever des choses et les déplacer grâce à la télékinésie. Pour cela il suffit d'appuyer sur A et de séléctionner la caisse. Ensuite dépose là ou tu veux !"],
 			"en": "dscrzfptn"
-		,
+		},
 		{
 			"key": "ExplainSwitchHerosArcherPower",
 			"fr": ["N'oublie pas que tu as 3 <color=#e74c3c>héros</color> à ta disposition.", "Pour changer de héros il suffit d'appuyer sur & é ou \"", "Appuis sur é pour jouer avec l'<color=#e74c3c>archer</color>", "L'<color=#e74c3c>archer</color> peut rirer une flèche. Si elle s'enfonce alors tu seras attiré vers elle, comme un grappin !"],
