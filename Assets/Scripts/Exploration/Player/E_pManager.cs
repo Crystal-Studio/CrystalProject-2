@@ -81,6 +81,10 @@ public class E_pManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            GM_Manager.instance.GetComponent<NavMeshSurface>().BuildNavMesh();
+        }
         if (_isCasting == false)
         { 
             #region Movement Input
@@ -183,6 +187,8 @@ public class E_pManager : MonoBehaviour
         GM_Manager.instance.spell.transform.GetChild(PlayerPrefs.GetInt("CurrentSelectHeros")).GetChild(0).SendMessage("StopSpellInteract");
         GM_Manager.instance.spell.transform.GetChild(PlayerPrefs.GetInt("CurrentSelectHeros")).GetChild(1).SendMessage("StopSpellInteract");
     }*/
+
+    
 
     #region Setter & Getter
     public void SetAnimator(Animator anim) { _anim = anim; }

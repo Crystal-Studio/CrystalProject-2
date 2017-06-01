@@ -9,6 +9,8 @@ public class E_InteractWithDoor : MonoBehaviour
     public Transform target;
     public GameObject door;
 
+    public bool keyNeeded;
+
     [SerializeField] private float _speed;
     [SerializeField] private bool _open;
 
@@ -28,6 +30,7 @@ public class E_InteractWithDoor : MonoBehaviour
     {
         if (_changeStateDoor)
         {
+            Debug.Log(_open + " " + door.transform.localEulerAngles);
             if (_open)
             {
                 door.transform.localEulerAngles = Vector3.MoveTowards(door.transform.localEulerAngles, Vector3.zero, _speed * Time.deltaTime);
@@ -48,10 +51,22 @@ public class E_InteractWithDoor : MonoBehaviour
 
     public void OnInteractStart()
     {
-        if (!_open)
+        if (_open)
             return;
-        call.Add(ShowContent);
-        StartCoroutine(DoActions());
+
+        if (PlayerPrefs.GetInt(GM_Manager.instance.zoneKey + "_key") == 1 && keyNeeded)
+        {
+            _open = true;
+            GM_Manager.instance.player.GetComponent<E_pManager>().SetMove(false);
+            call.Add(OpenDoor);
+            call.Add(HeroMove);
+            StartCoroutine(DoActions());
+        }
+        else
+        {
+            call.Add(ShowContent);
+            StartCoroutine(DoActions());
+        }
     }
 
     public void OnInteractSwitchStart()

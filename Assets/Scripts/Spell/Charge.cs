@@ -16,6 +16,8 @@ public class Charge : MonoBehaviour
     private bool _isActive;
     private bool _isMoving;
 
+    private bool _break;
+
     private Vector3 _startPos;
     private Vector3 _endPos;
 
@@ -35,7 +37,11 @@ public class Charge : MonoBehaviour
             _startPos = player.transform.position;
             _endPos = player.transform.position + player.transform.forward * (size.y + 1.5f);
             player.GetComponent<NavMeshAgent>().enabled = false;
+            player.transform.GetChild(4).gameObject.SetActive(false);
         }
+
+        if (Input.GetMouseButtonDown(1))
+            OnEndSpell();
 
         if (_isMoving)
         {
@@ -52,11 +58,11 @@ public class Charge : MonoBehaviour
             {
                 if (rhit.transform.tag == tagName)
                 {
-                    
+                    _break = true;
                     Destroy(rhit.transform.gameObject);
                     StartCoroutine(OnEndSpell());
                     _isMoving = false;
-                    GM_Manager.instance.GetComponent<NavMeshSurface>().BuildNavMesh();
+                    
                 }
             }
         }
@@ -65,6 +71,7 @@ public class Charge : MonoBehaviour
     public void OnCastSpell()
     {
         _isActive = true;
+        _break = false;
 
         player.transform.GetChild(4).localScale = new Vector3(size.x / 10, 1, size.y / 10);
         player.transform.GetChild(4).gameObject.SetActive(true);
@@ -74,12 +81,14 @@ public class Charge : MonoBehaviour
     {
         _isActive = false;
 
-        player.transform.GetChild(4).gameObject.SetActive(false);
+        
         player.GetComponent<E_pManager>().SetRotate(true);
         player.GetComponent<E_pManager>().SetTimerSpell(Time.time);
         player.GetComponent<E_pManager>().SetCasting(false);
         player.GetComponent<NavMeshAgent>().enabled = true;
         yield return new WaitForSeconds(0.15f);
         player.GetComponent<E_pManager>().SetMove(true);
+        if (_break)
+            GM_Manager.instance.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 }

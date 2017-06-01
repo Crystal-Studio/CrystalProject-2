@@ -47,6 +47,7 @@ public class Grappin : MonoBehaviour
             RaycastHit rhit;
             if (Physics.Raycast(_arrow.transform.position, _arrow.transform.forward, out rhit, 0.5f, layerCollider))
             {
+                Debug.Log("RHIT : " + rhit.transform.gameObject);
                 _endPos = Tools.GetPointDistanceFromObject(-1 * (rhit.transform.localScale.x / 2), rhit.point, player.transform.position);
                 _playerMovement = true;
                 _arrowMovement = false;
@@ -103,7 +104,7 @@ public class Grappin : MonoBehaviour
 
         _arrowMovement = true;
         _playerMovement = false;
-        _arrow = Instantiate(arrow, player.transform.position, Quaternion.identity) as GameObject;
+        _arrow = Instantiate(arrow, new Vector3(player.transform.position.x, 0.5f, player.transform.position.z), Quaternion.identity) as GameObject;
         _arrow.transform.localEulerAngles = player.transform.localEulerAngles;
 
         player.transform.GetChild(4).gameObject.SetActive(false);

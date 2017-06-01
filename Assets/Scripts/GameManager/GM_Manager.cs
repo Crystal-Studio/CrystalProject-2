@@ -21,6 +21,12 @@ public class GM_Manager : MonoBehaviour
     public GameObject spell;
     public GameObject spellBar;
 
+    [Header("InfoZone")]
+    public string zoneName;
+    public string zoneKey;
+
+    public GameObject zoneNameText;
+
     private Vector2 _size;
 
     private bool _spellBar;
@@ -53,6 +59,9 @@ public class GM_Manager : MonoBehaviour
                 _spellBar = false;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+            PlayerPrefs.DeleteAll();
     }
 
     void OnEnable()
@@ -72,6 +81,12 @@ public class GM_Manager : MonoBehaviour
         StartCoroutine(s_fade.FadeOUT());
         player.GetComponent<E_pManager>().SetMove(true);
         GetComponent<NavMeshSurface>().BuildNavMesh();
+        
+
+        zoneKey = GameObject.Find("LevelManager").GetComponent<GM_LevelManager>().zoneKey;
+        zoneName = GameObject.Find("LevelManager").GetComponent<GM_LevelManager>().zoneName;
+
+        DisplayName();
     }
 
     public void DisplaySpellBar(float f, float t)
@@ -81,5 +96,12 @@ public class GM_Manager : MonoBehaviour
         spellBar.SetActive(true);
         _timer = f;
         _timerSpell = t;
+    }
+
+    void DisplayName()
+    {
+        zoneNameText.GetComponent<Text>().text = zoneName;
+        zoneNameText.SetActive(true);
+        StartCoroutine(zoneNameText.GetComponent<CanvasFade>().OnDisplayText());
     }
 }

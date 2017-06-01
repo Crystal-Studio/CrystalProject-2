@@ -51,7 +51,7 @@ public class E_pMovement : MonoBehaviour
         if (Physics.Raycast(Camera.main.transform.position, direction, out rhit, (point - Camera.main.transform.position).magnitude, layer))
             point = rhit.point;
 
-        if (NavMesh.SamplePosition(point, out _navHit, 700, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(point, out _navHit, 2, NavMesh.AllAreas))
         {
             Debug.DrawRay(_navHit.position, Vector3.up, Color.yellow, 10.0f);
             _navMesh.destination = _navHit.position;
@@ -66,7 +66,7 @@ public class E_pMovement : MonoBehaviour
     public void MoveToTarget(Vector3 target)
     {
         _hasTarget = true;
-        if (NavMesh.SamplePosition(target, out _navHit, 700, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(target, out _navHit, 2, NavMesh.AllAreas))
         {
             Debug.DrawRay(_navHit.position, Vector3.up, Color.yellow, 10.0f);
             _navMesh.destination = _navHit.position;

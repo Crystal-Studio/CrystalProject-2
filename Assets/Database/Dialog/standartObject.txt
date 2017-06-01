@@ -1,0 +1,18 @@
+﻿{
+	"dialog": [{
+			"key": "ChestKey",
+			"fr": ["Tu as trouvé la <color=#2ecc71>clé</color> ! Elle te permet d'ouvrir la porte du boss."],
+			"en": "dscrptn"
+		},
+		{
+			"key": "ChestPlan",
+			"fr": ["C'est le plaaan"],
+			"en": "dscrzfptn"
+		},
+		{
+			"key": "ChestBoussole",
+			"fr": ["C'est la petite bousssole de Jack Sparrow"],
+			"en": "dscrzfptn"
+		}
+	]
+}
